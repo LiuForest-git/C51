@@ -1,0 +1,31 @@
+#include <reg52.h>
+#include <intrins.h>
+
+#define uchar unsigned char
+#define uint  unsigned int
+
+uchar temp;
+
+void delayms(uint xms)               //延迟函数
+{
+	uint i,j;
+	for(i=xms;i>0;i--)
+		for(j=110;j>0;j--);
+}
+
+void main()
+{
+	P0=0xff;                          //初始化操作
+	temp=0xfe;
+	while(1)
+	{
+		P1=temp;
+		switch(temp)                  //对temp的值进行判断，从而进行切换
+		{
+			case 0xbf:temp=0x7f;break;
+			case 0x7f:temp=0xbf;break;
+		}
+		temp=_crol_(temp,2);          //用函数对temp的值进行循环位移操作
+		delayms(500);                 //延迟
+	}
+}
