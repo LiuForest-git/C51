@@ -1,0 +1,112 @@
+#include <reg52.h>
+#include <intrins.h>
+
+#define uchar unsigned char
+#define uint  unsigned int
+#define on 0
+#define off 1
+	
+uchar temp,b;
+
+sbit led1=P1^0;
+sbit led2=P1^1;
+sbit led3=P1^2;
+sbit led4=P1^3;
+sbit led5=P1^4;
+sbit led6=P1^5;
+sbit led7=P1^6;
+sbit led8=P1^7;
+
+sbit k1=P3^4;
+sbit k2=P3^5;
+sbit k3=P3^6;
+sbit k4=P3^7;
+
+void delayms(uint xms)
+{
+	uint i,j;
+	for(i=xms;i>0;i--)
+		for(j=110;j>0;j--);
+}
+
+void main()
+{
+	//loop:
+	
+	P1=0xff;                   //初始化
+	
+	while(1)
+	{
+		if(k1 == 0)
+		{
+			delayms(10);
+			if(k1 == 0)
+			{
+				while(k1 == 0);
+				b=0xfe;
+				while(1)
+				{
+					P1=b;
+					delayms(500);
+					b=_crol_(b,1);
+					if(k2 == 0)
+					{
+						//delayms(1)
+						;
+						if(k2 == 0)
+						{
+							while(k2 == 0);
+			//				goto loop;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if(k3 == 0)
+		{
+			delayms(10);
+			if(k3 == 0)
+			{
+				while(k3 == 0);
+				while(1)
+				{
+					led8=on;
+					delayms(200);
+					led8=off;
+					led7=on;
+					delayms(200);
+					led7=off;
+					led6=on;
+					delayms(200);
+					led6=off;
+					led5=on;
+					delayms(200);
+					led5=off;
+					led4=on;
+					delayms(200);
+					led4=off;
+					led3=on;
+					delayms(200);
+					led3=off;
+					led2=on;
+					delayms(200);
+					led2=off;
+					led1=on;
+					delayms(200);
+					led1=off;
+					if(k4 == 0)
+					{
+						//delayms(1)
+						;
+						if(k4 == 0)
+						{
+							while(k4 == 0);
+					//		goto loop;
+						}
+					}
+				}
+			}
+		}
+	}
+}
